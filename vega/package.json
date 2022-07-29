@@ -29,12 +29,12 @@
 		"mongoose": "^5.13.14"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.14.8",
-		"@babel/core": "^7.14.8",
-		"@babel/node": "^7.14.7",
-		"@babel/preset-env": "^7.14.8",
-		"@types/cors": "^2.8.12",
-		"@types/graphql-upload": "^8.0.11",
+		"@babel/cli": "7.14.8",
+		"@babel/core": "7.14.8",
+		"@babel/node": "7.14.7",
+		"@babel/preset-env": "7.14.8",
+		"@types/cors": "2.8.12",
+		"@types/graphql-upload": "8.0.11",
 		"@types/jsonwebtoken": "8.5.8",
 		"nodemon": "2.0.19"
 	}
