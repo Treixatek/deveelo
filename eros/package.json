@@ -9,7 +9,7 @@
 		"gen": "graphql-codegen --config codegen.yml"
 	},
 	"dependencies": {
-		"@apollo/client": "^3.5.6",
+		"@apollo/client": "3.5.6",
 		"@tauri-apps/api": "^1.0.0-beta.8",
 		"apollo-link-token-refresh": "^0.4.0",
 		"apollo-upload-client": "^17.0.0",
