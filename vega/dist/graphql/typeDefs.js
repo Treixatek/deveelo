@@ -8,7 +8,7 @@ const graphql_tag_1 = __importDefault(require("graphql-tag"));
 exports.typeDefs = graphql_tag_1.default `
 	# The implementation for this scalar is provided by the
 	# 'GraphQLUpload' export from the 'graphql-upload' package
-	# in the resolver map in users.ts
+	# in the resolver map in resolvers/index.ts
 	scalar Upload
 
 	#  note  Types

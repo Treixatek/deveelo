@@ -15,6 +15,7 @@ import { getPayload } from "../accessToken";
 import { updateSidebar } from "../hooks/socialhooks";
 import { MinProfUserType } from "../lib/userTypes";
 import { Fmod } from "../hooks/setSidebar";
+import { bannerLoader } from "../hooks/loaders";
 
 /* todo 
 	+  Switch to unfollow button
@@ -370,7 +371,7 @@ const Sidebar = ({ hardEdge }: sidebarProps) => {
 			<SimpleBar className="fillfill">
 				{/*Banner*/}
 				<div className={sidebarStyles.banner}>
-					<Image className={sidebarStyles.bannerImage} alt="profile banner" src="/user_content/p_banners/pinkdunes.png" layout="fill" priority={true} objectFit="cover" />
+					<Image loader={bannerLoader} className={sidebarStyles.bannerImage} alt="profile banner" src={user.profile.bannerUrl} layout="fill" priority={true} objectFit="cover" />
 				</div>
 				{/*User Profile*/}
 				<div className={sidebarStyles.profileContainer}>

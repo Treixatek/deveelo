@@ -5,10 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const contentDir = "../../../public/uploads/";
+const imageOpts_1 = require("../../util/imageOpts");
+const validators_1 = require("../../util/validators");
+const apollo_server_express_1 = require("apollo-server-express");
+const User_1 = __importDefault(require("../../models/User"));
+const contentDir = "public/uploads/";
 let uploadedPfps;
 let uploadedBanners;
-fs_1.default.readdir(contentDir + "pfps", (err, files) => {
+fs_1.default.readdir(contentDir + "pfps/", (err, files) => {
     if (err) {
         console.log(`Error fetching all pfp file names from dir: ${contentDir} \n The error was: \n ${err}`);
     }
@@ -17,7 +21,7 @@ fs_1.default.readdir(contentDir + "pfps", (err, files) => {
         console.log("🦄 Profile picture filenames fetched and saved");
     }
 });
-fs_1.default.readdir(contentDir + "banners", (err, files) => {
+fs_1.default.readdir(contentDir + "banners/", (err, files) => {
     if (err) {
         console.log(`Error fetching all banner file names from dir: ${contentDir} \n The error was: \n ${err}`);
     }
@@ -29,15 +33,15 @@ fs_1.default.readdir(contentDir + "banners", (err, files) => {
 const uploadsResolvers = {
     Mutation: {
         singleUpload: async (_parent, { file, type }, { payload }) => {
-            let existingUploads;
             let savePath;
+            let imageOptimization;
             switch (type) {
                 case "pfp":
-                    existingUploads = uploadedPfps;
+                    imageOptimization = imageOpts_1.convertToWebpPfp;
                     savePath = contentDir + "pfps";
                     break;
                 case "banner":
-                    existingUploads = uploadedBanners;
+                    imageOptimization = imageOpts_1.convertToWebpBanner;
                     savePath = contentDir + "banners";
                     break;
                 default:
@@ -46,16 +50,36 @@ const uploadsResolvers = {
             const { createReadStream, filename, mimetype, encoding } = await file;
             const name = filename;
             const extension = name.split(".")[1];
-            const saveName = `${payload === null || payload === void 0 ? void 0 : payload.id}.${extension}`;
+            const { errors, valid } = validators_1.validateFileExtensions(extension, ["png", "jpg", "jpeg", "webp", "jfif", "avif"]);
+            if (!valid) {
+                throw new apollo_server_express_1.UserInputError(errors.file);
+            }
+            const saveName = `${payload === null || payload === void 0 ? void 0 : payload.id}.webp`;
+            try {
+                if (type === "pfp") {
+                    await User_1.default.findByIdAndUpdate(payload.id, { $set: { "profile.pictureUrl": `/pfps/${saveName}` } }, { useFindAndModify: false });
+                }
+                else if (type === "banner") {
+                    await User_1.default.findByIdAndUpdate(payload.id, { $set: { "profile.bannerUrl": `/banners/${saveName}` } }, { useFindAndModify: false });
+                }
+            }
+            catch (err) {
+                throw new Error("Error finding and updating user's pfp or banner image on new upload");
+            }
             await new Promise((res) => createReadStream()
-                .pipe(fs_1.default.createWriteStream(path_1.default.join(__dirname, savePath, saveName)))
+                .pipe(imageOptimization)
+                .pipe(fs_1.default.createWriteStream(path_1.default.join(savePath, saveName)))
                 .on("close", res));
             switch (type) {
                 case "pfp":
-                    uploadedPfps.push(saveName);
+                    if (!uploadedPfps.includes(saveName)) {
+                        uploadedPfps.push(saveName);
+                    }
                     break;
                 case "banner":
-                    uploadedBanners.push(saveName);
+                    if (!uploadedBanners.includes(saveName)) {
+                        uploadedBanners.push(saveName);
+                    }
                     break;
                 default:
                     throw new Error("Error when saving new file name to variable array storage of uploaded files");

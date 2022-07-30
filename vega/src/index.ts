@@ -1,4 +1,5 @@
 import "dotenv/config";
+import path from "path";
 import { ApolloServer } from "apollo-server-express";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 //@ts-ignore
@@ -249,6 +250,10 @@ const initServer = async () => {
 		//login the user (send access token)
 		return res.send({ ok: true, accessToken: createAccessToken(user) });
 	});
+
+	//send the images when route is loaded
+	app.use("/uploads/pfps", express.static(path.join(__dirname, "../public/uploads/pfps")));
+	app.use("/uploads/banners", express.static(path.join(__dirname, "../public/uploads/banners")));
 
 	const schema = makeExecutableSchema({
 		typeDefs,

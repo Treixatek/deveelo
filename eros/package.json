@@ -9,7 +9,7 @@
 		"gen": "graphql-codegen --config codegen.yml"
 	},
 	"dependencies": {
-		"@apollo/client": "^3.5.6",
+		"@apollo/client": "^3.6.9",
 		"@tauri-apps/api": "^1.0.0-beta.8",
 		"apollo-link-token-refresh": "^0.4.0",
 		"apollo-upload-client": "^17.0.0",
@@ -18,12 +18,13 @@
 		"next": "^12.1.0",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
+		"react-dropzone": "^14.2.2",
 		"react-responsive": "^8.2.0",
 		"simplebar-react": "^2.3.6",
 		"type-fest": "^2.12.0"
 	},
 	"devDependencies": {
-		"@graphql-codegen/cli": "2.0.1",
+		"@graphql-codegen/cli": "^2.11.0",
 		"@graphql-codegen/typescript": "2.0.0",
 		"@graphql-codegen/typescript-operations": "2.0.1",
 		"@graphql-codegen/typescript-react-apollo": "3.0.0",

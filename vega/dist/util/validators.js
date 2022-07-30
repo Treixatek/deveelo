@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateFileExtensions = void 0;
 const ValidateRegisterInput = (input, type) => {
     const errors = {};
     switch (type) {
@@ -65,5 +66,16 @@ const ValidateRegisterInput = (input, type) => {
         valid: Object.keys(errors).length < 1,
     };
 };
+const validateFileExtensions = (input, allowed) => {
+    const errors = {};
+    if (!allowed.includes(input)) {
+        errors.file = `Files of type ${input} are not supported`;
+    }
+    return {
+        errors,
+        valid: Object.keys(errors).length < 1,
+    };
+};
+exports.validateFileExtensions = validateFileExtensions;
 exports.default = ValidateRegisterInput;
 //# sourceMappingURL=validators.js.map

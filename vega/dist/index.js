@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
+const path_1 = __importDefault(require("path"));
 const apollo_server_express_1 = require("apollo-server-express");
 const schema_1 = require("@graphql-tools/schema");
 const graphqlUploadExpress_js_1 = __importDefault(require("graphql-upload/graphqlUploadExpress.js"));
@@ -202,6 +203,8 @@ const initServer = async () => {
         auth_1.sendRefreshToken(res, auth_1.createRefreshToken(user));
         return res.send({ ok: true, accessToken: auth_1.createAccessToken(user) });
     });
+    app.use("/uploads/pfps", express_1.default.static(path_1.default.join(__dirname, "../public/uploads/pfps")));
+    app.use("/uploads/banners", express_1.default.static(path_1.default.join(__dirname, "../public/uploads/banners")));
     const schema = schema_1.makeExecutableSchema({
         typeDefs: typeDefs_1.typeDefs,
         resolvers: middleware_1.composedResolvers,

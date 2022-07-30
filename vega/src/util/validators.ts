@@ -76,4 +76,20 @@ const ValidateRegisterInput = (input: string, type: string) => {
 	};
 };
 
+//this function checks to make sure that the file uploaded is of the supported
+//type for the given purpose, i.e. no .zip or .rar for posts, no .gif for pfp uploads
+// note  the extension does not include the period "." i.e: png, svg, webp
+export const validateFileExtensions = (input: string, allowed: string[]) => {
+	const errors: LooseErrors = {};
+
+	if (!allowed.includes(input)) {
+		errors.file = `Files of type ${input} are not supported`;
+	}
+
+	return {
+		errors,
+		valid: Object.keys(errors).length < 1,
+	};
+};
+
 export default ValidateRegisterInput;

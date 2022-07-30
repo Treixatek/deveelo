@@ -7,6 +7,7 @@
 		"watch": "tsc -w",
 		"start": "nodemon dist/index.js",
 		"revoke": "node dist/hooks/revokeUserToken.js",
+		"upfield": "node dist/hooks/updateFieldAll.js",
 		"build": "echo 'azure pipelines test build script executed (this prevents failed tests)'"
 	},
 	"keywords": [],
@@ -26,7 +27,8 @@
 		"graphql-tools": "^8.3.0",
 		"graphql-upload": "^15.0.2",
 		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^5.13.14"
+		"mongoose": "^5.13.14",
+		"sharp": "^0.30.7"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.14.8",
@@ -36,6 +38,7 @@
 		"@types/cors": "^2.8.12",
 		"@types/graphql-upload": "^8.0.11",
 		"@types/jsonwebtoken": "8.5.8",
+		"@types/sharp": "^0.30.4",
 		"nodemon": "2.0.19"
 	}
 }

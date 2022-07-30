@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const typeDefs = gql`
 	# The implementation for this scalar is provided by the
 	# 'GraphQLUpload' export from the 'graphql-upload' package
-	# in the resolver map in users.ts
+	# in the resolver map in resolvers/index.ts
 	scalar Upload
 
 	#  note  Types

@@ -337,7 +337,7 @@ const userResolvers = {
 					pro: false,
 				},
 				profile: {
-					bannerUrl: "default",
+					bannerUrl: `/banners/image_${Math.floor(Math.random() * 4)}.webp`, //0-3
 					pictureUrl: `/user_content/p_pictures/cup${Math.floor(Math.random() * 18)}.jpg`, //0-17
 					description: "I'm new to Deveelo!",
 					followingIds: [],
